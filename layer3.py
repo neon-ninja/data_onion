@@ -25,7 +25,7 @@ for offset in range(len(decoded)):
     # Simply try until we get decodable utf-8 data that has what we want
     try:
         output = bytes(b).decode('utf-8')
-        if output.startswith('==[ Layer 4/5: ') and '==[ Payload ]============================================' in output:
+        if output.startswith('==[ Layer 4/6: ') and '==[ Payload ]============================================' in output:
             print(output)
     except:
         pass

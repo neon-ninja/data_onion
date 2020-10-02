@@ -2,6 +2,7 @@
 
 import base64
 from Crypto.Cipher import AES
+from Crypto.Util import Counter
 import struct
 QUAD = struct.Struct('>Q')
 
@@ -33,5 +34,6 @@ KEY, new_IV = aes_unwrap_key_and_iv(KEK, WRAPPED_KEY)
 assert new_IV == IV
 #print(KEY)
 
-cipher = AES.new(KEY, AES.MODE_CBC, ENCIV)
+ctr = Counter.new(128, initial_value = int.from_bytes(ENCIV, byteorder="big"))
+cipher = AES.new(KEY, AES.MODE_CTR, counter=ctr)
 print(cipher.decrypt(ENCRYPTED_PAYLOAD).decode())
